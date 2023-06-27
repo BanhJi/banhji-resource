@@ -70,7 +70,7 @@
 
     <v-row>
       <v-col cols="12" class="py-0">
-        <v-btn v-if="!isEdite" @click="Save()" class="float-right white--text" color="green">Save</v-btn>
+        <v-btn v-if="!isEdite" @click="Save()" class="float-right white--text" :loading="loading" color="green">Save</v-btn>
         <v-btn v-else @click="Save()" class="float-right white--text" color="green">Update</v-btn>
       </v-col>
     </v-row>
@@ -108,6 +108,7 @@ export default {
     topic: [],
     product: [],
     category_type: [],
+    loading: false,
   }),
   components: {
     FunctionLayout,
@@ -150,7 +151,12 @@ export default {
     Save() {
       if (!this.isEdite) {
         console.log(this.guide)
+        this.loading = true;
         let adding = this.uResource.add(this.guide)
+        this.loading = false;
+        if(adding) {
+          window.history.go(-1);
+        }
         console.log(adding)
       } else {
         updateGuide(this.guide)
@@ -159,7 +165,6 @@ export default {
             if (res.data.status == "SUCCESS") {
               window.console.log("have respne", res)
               this.guide = guidesModel;
-              window.history.go(-1);
             }
           })
           .catch((err) => {
