@@ -10,7 +10,7 @@ console.log("message", messages);
 // Create I18n instance
 const i18n = createI18n({
   legacy: false,
-  locale: "ch",
+  locale: "en",
   globalInjection: true,
   messages,
 });
