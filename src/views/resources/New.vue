@@ -85,7 +85,7 @@ import GuidesModel from "@/scripts/guide/model/Guides";
 import FunctionLayout from "@/components/FunctionLayout.vue";
 import Back from "@/components/Back.vue";
 import useResource from '@/composables/useResource.js'
-
+import { store } from "@/stores/store.js"
 
 import('@/components/Back.vue')
 import {
@@ -109,6 +109,7 @@ export default {
     product: [],
     category_type: [],
     loading: false,
+    store
   }),
   components: {
     FunctionLayout,
@@ -134,19 +135,6 @@ export default {
       reader.readAsDataURL(file);
     },
     getTypeM() {
-      // getType().then((res) => {
-      //   res.data.data.Items.map((i) => {
-      //     if (i.category == "Topic") {
-      //       this.topic.push(i);
-      //     }
-      //     if (i.category == "Type") {
-      //       this.category_type.push(i);
-      //     }
-      //     if (i.category == "Product") {
-      //       this.product.push(i);
-      //     }
-      //   });
-      // });
     },
     Save() {
       if (!this.isEdite) {
@@ -174,13 +162,10 @@ export default {
     },
   },
   mounted() {
-    this.getTypeM();
-    if (this.$route.params.id) {
-      this.guide = this.$route.params.guide;
-      this.isEdite = true;
-    } else {
-      this.isEdite = false;
+    if(Object.keys(this.store.selected).length > 0) {
+      this.guide = this.store.selected
     }
+    console.log(this.store.selected);
   },
 };
 </script>

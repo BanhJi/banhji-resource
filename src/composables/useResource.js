@@ -23,10 +23,16 @@ export default function useResource() {
     }
   };
 
-  const get = async () => {
+  const get = async (page) => {
     try {
-      state.saving = true;
-      return await api.get(`/resources/content/get`);
+      let pk = '', sk = ''
+      if(page.key.pk) {
+        pk = page.key.pk
+      }
+      if(page.key.sk) {
+        sk = page.key.sk
+      }
+      return await api.get(`/resources/content/get?pageSize=${page.pageSize}&pk=${pk}&sk=${sk}`);
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
       throw Utils.getErrorMessage(err);

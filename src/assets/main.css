@@ -33,3 +33,8 @@
     padding: 0 2rem;
   }
 } */
+
+.v-text-field .v-field--no-label input, .v-text-field .v-field--active input {
+  opacity: 1;
+  height: 40px;
+}
