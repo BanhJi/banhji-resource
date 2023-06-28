@@ -9,15 +9,15 @@
         <div class="d-flex pt-6">
 
           <div style="width: 120px;">
-            <v-text-field       style="    min-height: 40px !important;"
-        variant="solo" :model-value="page.pageSize"  type="number" min="-1" max="15"
-            hide-details @update:model-value="page.pageSize = parseInt($event, 10)"></v-text-field>
+            <v-text-field  style="min-height: 40px !important;" variant="solo" :model-value="page.pageSize"
+              type="number" min="-1" max="15" hide-details
+              @update:model-value="page.pageSize = parseInt($event, 10)"></v-text-field>
           </div>
 
           <div style="width: 40%;">
             <v-pagination class="text-left" v-model="pageNum" :length="pageCount"></v-pagination>
           </div>
-   
+
         </div>
       </template>
       <template v-slot:item="row">
@@ -73,30 +73,39 @@ export default {
         key: '',
       },
       selected: {},
-      store
+      store,
+      lastPage: 0
     }
   },
   methods: {
     async getResources() {
       let res = await this.uResource.get(this.page);
+      this.page.key = res.data.key || {}
       if (res.data) {
         this.resources = res.data.data
-        console.log(res.data)
-        this.page.key = res.data.key
-        if(Object.keys(this.page.key).length > 0) {
-          this.pageCount+=1
+        if (Object.keys(this.page.key).length > 0) {
+          if (this.pageCount > this.lastPage) {
+            this.pageCount += 1
+            this.lastPage = this.pageCount
+          }
         }
+        // this.page.key = ''
       }
     },
     onButtonClick(val) {
       this.store.selected = val.selectable
-      this.$router.push({name: 'new'})
+      this.$router.push({ name: 'new' })
       console.log(val.selectable)
     }
   },
-  watch:{
-    pageNum(){
+  watch: {
+    pageNum() {
       this.getResources();
+    },
+  },
+  computed:{
+    pageSizeChange(){
+      return this.page.pageSize
     }
   },
   mounted() {
