@@ -27,3 +27,4 @@ npm run dev
 ```sh
 npm run build
 ```
+## Required nodejs version 16x or above
