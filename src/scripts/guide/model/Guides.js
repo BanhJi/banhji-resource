@@ -14,6 +14,7 @@ export default class Guides{
         this.product = data.product || '',
         this.category_type = data.category_type || ''
         this.type = data.type || 'resource',
+        this.status = data.status || 1
         
         this.image = data.image || ''
     }

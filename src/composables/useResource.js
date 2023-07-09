@@ -22,6 +22,17 @@ export default function useResource() {
       state.saving = false;
     }
   };
+  const deleteResult = async (data) => {
+    try {
+      state.saving = true;
+      await api.post("/resources/content/delete", data);
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    } finally {
+      state.saving = false;
+    }
+  };
 
   const get = async (page) => {
     try {
@@ -41,10 +52,34 @@ export default function useResource() {
     }
   };
 
+  const me = async (token) => {
+    // try {
+      return await api.get(`/resources/auth/me?token=${token}`);
+    // } catch (err) {
+    //   throw Utils.getErrorMessage(err);
+    // } finally {
+    //   state.saving = false;
+    // }
+  };
+
+  const login = async (data) => {
+    try {
+      return await api.post(`/resources/auth/login`,data);
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    } finally {
+      state.saving = false;
+    }
+  };
+
 
   return {
     ...toRefs(state),
     add,
     get,
+    me,
+    login,
+    deleteResult
   };
 }

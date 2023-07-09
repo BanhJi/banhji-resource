@@ -5,11 +5,10 @@ const api = axios.create({
 });
 
 // const AUTH_TOKEN = ""
-// axios.interceptors.request.use(function (config) {
+api.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+// api.interceptors.request.use(function (config) {
 //   config.headers = {
-//     Authorization: `Bearer ${AUTH_TOKEN}`,
-//     Accept: 'application/json',
-//     'Content-Type': 'application/json'
+//     Authorization: `Bearer ${localStorage.getItem("token")}`,
 //   }
 
 //   return config

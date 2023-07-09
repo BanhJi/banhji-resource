@@ -26,13 +26,41 @@
           <td>{{ row.item.selectable?.type }}</td>
           <td>{{ row.item.selectable?.feature }}</td>
           <td class="text-right">
-            <v-btn class="mx-2" icon size="sm" @click="onButtonClick(row.item)">
+            <v-btn class="mx-2 pa-2" icon size="sm" @click="onButtonClick(row.item,)">
               <v-icon dark>mdi-pen</v-icon>
+            </v-btn>
+                <v-btn class="mx-2 mt-1 pa-2" icon size="sm" @click="onButtonClickDelete(row.item)">
+              <v-icon dark color="red">mdi-delete</v-icon>
             </v-btn>
           </td>
         </tr>
       </template>
     </v-data-table>
+     <v-dialog
+      v-model="dialog"
+      width="auto"
+    >
+      <template v-slot:activator="{ props }">
+        <v-btn
+          color="primary"
+          v-bind="props"
+        >
+          Delete
+        </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-text>
+          Are you sure you want to delete this resource?
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="dialog = false">Close</v-btn>
+        </v-card-actions>
+            <v-card-actions>
+          <v-btn color="primary" block @click="onDelete">Ok</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -51,6 +79,7 @@ export default {
   },
   data() {
     return {
+      dialog: false,
       itemsPerPage: 2,
       pageCount: 1,
       pageNum: 1,
@@ -96,6 +125,14 @@ export default {
       this.store.selected = val.selectable
       this.$router.push({ name: 'new' })
       console.log(val.selectable)
+    },
+    onButtonClickDelete(val) {
+      this.store.selected = val.selectable
+      this.dialog = true
+    },
+    async onDelete(){
+      this.store.selected['status'] = 2
+      await uResource.updateGuide(this.store.selected)
     }
   },
   watch: {
