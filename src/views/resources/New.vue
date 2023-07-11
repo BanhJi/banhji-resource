@@ -2,7 +2,6 @@
   <QuillEditor theme="snow" toolbar="full" />
 
 </template> -->
-
 <template>
   <div>
     <Back />
