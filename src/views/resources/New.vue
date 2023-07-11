@@ -171,7 +171,11 @@ export default {
   },
   mounted() {
     if (Object.keys(this.store.selected).length > 0) {
-      this.guide = this.store.selected;
+      this.uResource.view(this.store.selected.id).then((res) => {
+        if (res.data.data.length > 0) {
+          this.guide = res.data.data[0];
+        }
+      });
     }
     console.log(this.store.selected);
   },

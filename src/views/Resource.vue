@@ -3,9 +3,8 @@
     <v-icon @click="logOut" large class="mr-2"> mdi-logout </v-icon>
     <v-tabs v-model="tab" bg-color="primary" min-height="500">
       <v-tab value="List">List</v-tab>
-      <v-tab value="one">Resouce</v-tab>
-      <v-tab value="two">Item Two</v-tab>
-      <v-tab value="three">Item Three</v-tab>
+      <v-tab value="one">Deleted</v-tab>
+      <v-tab value="two">Public</v-tab>
     </v-tabs>
 
     <v-card-text>
@@ -15,7 +14,7 @@
         </v-window-item>
 
         <v-window-item value="two">
-          <New />
+          delted
         </v-window-item>
 
         <v-window-item value="three"> Three </v-window-item>

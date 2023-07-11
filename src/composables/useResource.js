@@ -51,6 +51,16 @@ export default function useResource() {
       state.saving = false;
     }
   };
+  const view = async (id) => {
+    try {
+      return await api.get(`/resources/content/view?id=${id}`);
+    } catch (err) {
+      //throw Error(Utils.getErrorMessage(err));
+      throw Utils.getErrorMessage(err);
+    } finally {
+      state.saving = false;
+    }
+  };
 
   const me = async (token) => {
     // try {
@@ -80,6 +90,7 @@ export default function useResource() {
     get,
     me,
     login,
-    deleteResult
+    deleteResult,
+    view
   };
 }
