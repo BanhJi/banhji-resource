@@ -7,8 +7,12 @@
   <div>
     <Back />
     <v-tabs v-model="tab" class="mb-2" color="primary" bg-color="grey" align-tabs="left">
-      <v-tab :value="1"> <img style="width: 35px ; height: 20px;" src="@/assets/images/us.png" /></v-tab>
-      <v-tab :value="2"> <img style="width: 35px ; height: 20px;" src="@/assets/images/kh.png" /> </v-tab>
+      <v-tab :value="1">
+        <img style="width: 35px; height: 20px" src="@/assets/images/us.png"
+      /></v-tab>
+      <v-tab :value="2">
+        <img style="width: 35px; height: 20px" src="@/assets/images/kh.png" />
+      </v-tab>
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item :value="1">
@@ -37,13 +41,16 @@
           <v-col sm="4" cols="12" class="py-0">
             <label>Feature Image</label>
             <input type="file" @change="onFileChange" />
-            <img :src="guide.image" style="widht: 120px ; height: 80px" />
+            <img :src="guide.image" style="widht: 120px; height: 80px" />
           </v-col>
         </v-row>
         <div class="my-6">
-
-          <QuillEditor theme="snow" v-model:content="guide.content" toolbar="full"  contentType="html"/>
-
+          <QuillEditor
+            theme="snow"
+            v-model:content="guide.content"
+            toolbar="full"
+            contentType="html"
+          />
         </div>
       </v-window-item>
       <!-- khmer seing -->
@@ -60,9 +67,7 @@
         </v-row>
         <div class="mt-6">
           <div class="my-6">
-
             <QuillEditor theme="snow" v-model:content="guide.content" toolbar="full" />
-
           </div>
         </div>
       </v-window-item>
@@ -70,11 +75,19 @@
 
     <v-row>
       <v-col cols="12" class="py-0">
-        <v-btn v-if="!isEdite" @click="Save()" class="float-right white--text" :loading="loading" color="green">Save</v-btn>
-        <v-btn v-else @click="Save()" class="float-right white--text" color="green">Update</v-btn>
+        <v-btn
+          v-if="!isEdite"
+          @click="Save()"
+          class="float-right white--text"
+          :loading="loading"
+          color="green"
+          >Save</v-btn
+        >
+        <v-btn v-else @click="Save()" class="float-right white--text" color="green"
+          >Update</v-btn
+        >
       </v-col>
     </v-row>
-
   </div>
 </template>
 
@@ -84,21 +97,17 @@
 import GuidesModel from "@/scripts/guide/model/Guides";
 import FunctionLayout from "@/components/FunctionLayout.vue";
 import Back from "@/components/Back.vue";
-import useResource from '@/composables/useResource.js'
-import { store } from "@/stores/store.js"
+import useResource from "@/composables/useResource.js";
+import { store } from "@/stores/store.js";
 
-import('@/components/Back.vue')
-import {
-  addGuide,
-  updateGuide,
-  getType,
-} from "@/scripts/guide/handle/guide.js";
+import("@/components/Back.vue");
+import { addGuide, updateGuide, getType } from "@/scripts/guide/handle/guide.js";
 
 const guidesModel = new GuidesModel({});
 export default {
-  setup(){
+  setup() {
     const uResource = useResource();
-    return { uResource }
+    return { uResource };
   },
   data: () => ({
     tab: 1,
@@ -109,11 +118,11 @@ export default {
     product: [],
     category_type: [],
     loading: false,
-    store
+    store,
   }),
   components: {
     FunctionLayout,
-    Back
+    Back,
   },
   methods: {
     Close() {
@@ -134,24 +143,24 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-    getTypeM() {
-    },
+    getTypeM() {},
     Save() {
       if (!this.isEdite) {
-        console.log(this.guide)
+        this.guide["status"] = 1;
         this.loading = true;
-        let adding = this.uResource.add(this.guide)
+        let adding = this.uResource.add(this.guide);
         this.loading = false;
-        if(adding) {
+        if (adding) {
           window.history.go(-1);
         }
-        console.log(adding)
+        console.log(adding);
       } else {
+        this.guide["status"] = 1;
         updateGuide(this.guide)
           .then((res) => {
-            window.console.log(res.data)
+            window.console.log(res.data);
             if (res.data.status == "SUCCESS") {
-              window.console.log("have respne", res)
+              window.console.log("have respne", res);
               this.guide = guidesModel;
             }
           })
@@ -162,8 +171,8 @@ export default {
     },
   },
   mounted() {
-    if(Object.keys(this.store.selected).length > 0) {
-      this.guide = this.store.selected
+    if (Object.keys(this.store.selected).length > 0) {
+      this.guide = this.store.selected;
     }
     console.log(this.store.selected);
   },

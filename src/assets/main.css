@@ -38,3 +38,8 @@
   opacity: 1;
   height: 40px;
 }
+
+.v-data-table .v-table__wrapper > table > thead > tr th {
+  font-size: 18px !important;
+  font-weight: bold;
+}
