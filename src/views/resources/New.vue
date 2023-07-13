@@ -124,6 +124,7 @@ export default {
     Back,
   },
   methods: {
+    
     Close() {
       window.history.go(-1);
     },
