@@ -10,14 +10,14 @@
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="List">
-          <List />
+          <List type="public" :change="tab"/>
         </v-window-item>
-
+        <v-window-item value="one" >
+          <List type="delete"  :change="tab"/>
+        </v-window-item>
         <v-window-item value="two">
-          delted
+          <List type="preview"  :change="tab" />
         </v-window-item>
-
-        <v-window-item value="three"> Three </v-window-item>
       </v-window>
     </v-card-text>
   </v-card>
@@ -28,11 +28,11 @@ import { ref } from "vue";
 import New from "./resources/New.vue";
 import List from "./resources/List.vue";
 const tab = ref("List");
- import { useRouter } from 'vue-router';
- const router = useRouter();
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const logOut = () => {
   localStorage.setItem("token", null);
- router.push({ name: "login" });
-}
+  router.push({ name: "login" });
+};
 </script>

@@ -34,7 +34,7 @@ export default function useResource() {
     }
   };
 
-  const get = async (page) => {
+  const get = async (page,type) => {
     try {
       let pk = '', sk = ''
       if(page.key.pk) {
@@ -43,7 +43,7 @@ export default function useResource() {
       if(page.key.sk) {
         sk = page.key.sk
       }
-      return await api.get(`/resources/content/get?pageSize=${page.pageSize}&pk=${pk}&sk=${sk}`);
+      return await api.get(`/resources/content/get?pageSize=${page.pageSize}&pk=${pk}&sk=${sk}&type=${type}`);
     } catch (err) {
       //throw Error(Utils.getErrorMessage(err));
       throw Utils.getErrorMessage(err);

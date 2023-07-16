@@ -75,6 +75,7 @@ import useResource from "@/composables/useResource.js";
 import { store } from "@/stores/store.js";
 
 export default {
+  props: ['type','change'],
   setup() {
     const uResource = useResource();
     return { uResource };
@@ -110,7 +111,7 @@ export default {
   },
   methods: {
     async getResources() {
-      let res = await this.uResource.get(this.page);
+      let res = await this.uResource.get(this.page, this.type);
       this.page.key = res.data.key || {};
       if (res.data) {
         this.resources = res.data.data;
@@ -142,17 +143,20 @@ export default {
     },
   },
   watch: {
-    pageNum() {
-      this.getResources();
+    checkChange() {
+      // this.getResources(this.type);
     },
   },
   computed: {
     pageSizeChange() {
       return this.page.pageSize;
     },
+    checkChange() {
+      return this.change
+    }
   },
   mounted() {
-    this.getResources();
+    this.getResources(this.type);
   },
 };
 </script>
